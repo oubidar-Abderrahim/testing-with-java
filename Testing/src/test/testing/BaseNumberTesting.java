@@ -7,8 +7,8 @@ public class BaseNumberTesting {
 		int a = 053;
 		int b = 43;
 		
-		System.out.println(a == b);
-		System.out.println(a);
-		System.out.println(b);
+		System.out.println("is a==b : " + (a == b));
+		System.out.println("value of a : " + a);
+		System.out.println("value of b : " + b);
 	}
 }
