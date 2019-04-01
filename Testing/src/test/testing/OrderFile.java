@@ -34,6 +34,11 @@ public class OrderFile {
 		
 		int ch = spA.characteristics() & spB.characteristics() & (Spliterator.NONNULL | Spliterator.SIZED);
 		ch |= Spliterator.ORDERED;
+		/*
+		 * It retains the characteristics of the input streams as far as possible, which allows certain optimizations (e.g. for count()and toArray()). 
+		 * Further, it adds the ORDERED even when the input streams might be unordered, to reflect the interleaving.
+		 * When one stream has more elements than the other, the remaining elements will appear at the end.
+		 */
 
 		return StreamSupport.stream(new Spliterators.AbstractSpliterator<T>(s, ch) {
 			Spliterator<T> sp1 = spA, sp2 = spB;
@@ -55,11 +60,6 @@ public class OrderFile {
 	
 	public static void concatFileLinesAsStream(String firstFileName, String secondFileName) {
 		
-		/*
-		 * It retains the characteristics of the input streams as far as possible, which allows certain optimizations (e.g. for count()and toArray()). 
-		 * Further, it adds the ORDERED even when the input streams might be unordered, to reflect the interleaving.
-		 * When one stream has more elements than the other, the remaining elements will appear at the end.
-		 */
 
 		try (Stream<String> firstLines = Files.lines(Paths.get(firstFileName));
 				Stream<String> secondLines = Files.lines(Paths.get(secondFileName))) {
